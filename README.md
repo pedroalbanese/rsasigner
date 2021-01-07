@@ -3,13 +3,13 @@
 
 <h5>Usage:</h5>
 <pre>  -bits int 
-        Key pair bit length. (for key pair generation only) (default 2048)
+        Keypair bit length. (for keypair generation only) (default 2048)
   -digest string 
         Compute SHA256 hashsum of a file.
   -digest512 string
         Compute SHA512 hashsum of a file. 
   -generate
-        Generate RSA key pair. 
+        Generate RSA keypair. 
   -hash string
         Input hash/string to sign/verify. (- for stdin) 
   -key string
@@ -19,7 +19,7 @@
   -signature string 
         Input signature. (verification only)
   -suffix string
-        Suffix. (for key pair generation only) (default ".pem") 
+        Suffix. (for keypair generation only) (default ".pem") 
   -verify 
         Verify hash with public key.
 </pre>
