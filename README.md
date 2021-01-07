@@ -22,4 +22,10 @@
         Suffix. (for key pair generation only) (default ".pem") 
   -verify 
         Verify hash with public key.
+
+Example
+hash=$(./rsasigner -digest512 main.go)
+./rsasigner -sign -key private.pem -hash $hash
+sign=$(./rsasigner -sign -key private.pem -hash $hash)
+./rsasigner -verify -key public.pem -hash $hash -signature $sign
 </pre>
