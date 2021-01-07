@@ -1,8 +1,8 @@
 # RSA Signer
 <h3>Command-line Hash Signer written in Go</h3>
-  
-<pre> Usage: 
-   -bits int 
+
+<h5>Usage:</h5>
+<pre>    -bits int 
         Key pair bit length. (for key pair generation only) (default 2048)
   -digest string 
         Compute SHA256 hashsum of a file.
@@ -22,16 +22,18 @@
         Suffix. (for key pair generation only) (default ".pem") 
   -verify 
         Verify hash with public key.
-
-Example:
-./rsasigner -digest512 main.go
+</pre>
+<h5>Example:</h5>
+<pre>./rsasigner -digest512 main.go
 hash=$(./rsasigner -digest512 main.go)
 ./rsasigner -sign -key private.pem -hash $hash
 sign=$(./rsasigner -sign -key private.pem -hash $hash)
 ./rsasigner -verify -key public.pem -hash $hash -signature $sign
+</pre>
 
-or:
-./rsasigner -digest512 main.go|./rsasigner -sign -key private.pem -hash - > sign.txt
+<h5>or:</h5>
+<pre>./rsasigner -digest512 main.go|./rsasigner -sign -key private.pem -hash - > sign.txt
 sign=$(cat sign.txt)
 ./rsasigner -digest512 main.go|./rsasigner -verify -key public.pem -hash - -signature $sign
+</pre>
 </pre>
