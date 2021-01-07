@@ -21,6 +21,6 @@
         Input signature. (verification only)
   -suffix string
         Suffix. (for key pair generation only) (default ".pem") 
-  -verify <BR>
+  -verify 
         Verify hash with public key.
 </pre>
