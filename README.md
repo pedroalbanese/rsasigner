@@ -2,7 +2,7 @@
 <h3>Command-line Hash Signer written in Go</h3>
 
 <h5>Usage:</h5>
-<pre>    -bits int 
+<pre>  -bits int 
         Key pair bit length. (for key pair generation only) (default 2048)
   -digest string 
         Compute SHA256 hashsum of a file.
