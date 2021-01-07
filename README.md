@@ -7,19 +7,19 @@
         Key pair bit length. (for key pair generation only) (default 2048)
   -digest string 
         Compute SHA256 hashsum of a file.
-  -digest512 string <BR>
+  -digest512 string
         Compute SHA512 hashsum of a file. 
   -generate
         Generate RSA key pair. 
-  -hash string <BR>
+  -hash string
         Input hash/string to sign/verify. (- for stdin) 
   -key string
         Path to Private/Public key depending on operation. 
   -sign 
         Sign hash with private key. 
-  -signature string <BR>
+  -signature string 
         Input signature. (verification only)
-  -suffix string <BR>
+  -suffix string
         Suffix. (for key pair generation only) (default ".pem") 
   -verify <BR>
         Verify hash with public key.
