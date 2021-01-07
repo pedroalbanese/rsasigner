@@ -1,4 +1,4 @@
-# rsasigner
+# RSA Signer
 <h3>Command-line Hash Signer written in Go</h3>
   
 <pre>  
