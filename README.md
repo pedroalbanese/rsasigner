@@ -24,6 +24,7 @@
         Verify hash with public key.
 
 Example
+./rsasigner -digest512 main.go
 hash=$(./rsasigner -digest512 main.go)
 ./rsasigner -sign -key private.pem -hash $hash
 sign=$(./rsasigner -sign -key private.pem -hash $hash)
