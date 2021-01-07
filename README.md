@@ -1,2 +1,2 @@
 # rsasigner
-RSA Hash Signer written in Go
+Command-line Hash Signer written in Go
