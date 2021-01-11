@@ -1,5 +1,5 @@
 # RSA Signer
-<h3>Command-line Hash Signer written in Go</h3>
+<h3>Command-line Signer based on Asymmmetric RSA Public Key written in Go</h3>
 
 <h5>Usage:</h5>
 <pre>  -bits int 
