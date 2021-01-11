@@ -30,7 +30,6 @@ hash=$(./rsasigner -digest512 main.go)
 sign=$(./rsasigner -sign -key private.pem -hash $hash)
 ./rsasigner -verify -key public.pem -hash $hash -signature $sign
 </pre>
-
 <h5>or:</h5>
 <pre>./rsasigner -digest512 main.go|./rsasigner -sign -key private.pem -hash - > sign.txt
 sign=$(cat sign.txt)
