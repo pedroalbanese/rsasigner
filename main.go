@@ -1,31 +1,31 @@
 package main    
 import (
-	"os"
-	"io"
-	"log"
-	"fmt"
-	"flag"
 	"bufio"
 	"crypto"
-	"crypto/rsa"
 	"crypto/rand"
-	"crypto/x509"
-	"encoding/pem"
+	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/sha512"
+	"crypto/x509"
+	"encoding/pem"
+	"flag"
+	"fmt"
+	"io"
+	"log"
+	"os"
         b64 "encoding/base64"
 )
 
+        var bit = flag.Int("bits", 2048, "Keypair bit length. (for keypair generation only)")
+        var digest = flag.String("digest", "", "Compute SHA256 hashsum of a file.")
+        var digest512 = flag.String("digest512", "", "Compute SHA512 hashsum of a file.")
+        var generate = flag.Bool("generate", false, "Generate RSA keypair.")
         var hash = flag.String("hash", "", "Input hash/string to sign/verify. (- for stdin)")
         var key = flag.String("key", "", "Path to Private/Public key depending on operation.")
         var sig = flag.String("signature", "", "Input signature. (verification only)")
-        var bit = flag.Int("bits", 2048, "Key pair bit length. (for key pair generation only)")
-        var suf = flag.String("suffix", ".pem", "Suffix. (for key pair generation only)")
         var sign = flag.Bool("sign", false, "Sign hash with private key.")
+        var suf = flag.String("suffix", ".pem", "Suffix. (for keypair generation only)")
         var verify = flag.Bool("verify", false, "Verify hash with public key.")
-        var generate = flag.Bool("generate", false, "Generate RSA key pair.")
-        var digest = flag.String("digest", "", "Compute SHA256 hashsum of a file.")
-        var digest512 = flag.String("digest512", "", "Compute SHA512 hashsum of a file.")
 
 func main() {
     flag.Parse()
@@ -43,40 +43,36 @@ func main() {
         } 
 
         if *digest != "" {
-        f, err := os.Open(*digest)
-        if err != nil {
-            log.Fatal(err)
-        }
-            defer f.Close()
-
-        h := sha256.New()
-        if _, err := io.Copy(h, f); err != nil {
-            log.Fatal(err)
-        }
-   
-        fmt.Printf("%x", h.Sum(nil))
-        os.Exit(0)
+	        f, err := os.Open(*digest)
+	        if err != nil {
+	            log.Fatal(err)
+	        }
+	            defer f.Close()
+	        h := sha256.New()
+	        if _, err := io.Copy(h, f); err != nil {
+	            log.Fatal(err)
+	        }
+	        fmt.Printf("%x", h.Sum(nil))
+	        os.Exit(0)
         }
 
         if *digest512 != "" {
-        f, err := os.Open(*digest512)
-        if err != nil {
-            log.Fatal(err)
-        }
-            defer f.Close()
-
-        h := sha512.New()
-        if _, err := io.Copy(h, f); err != nil {
-            log.Fatal(err)
-        }
-   
-        fmt.Printf("%x", h.Sum(nil))
-        os.Exit(0)
+	        f, err := os.Open(*digest512)
+	        if err != nil {
+	            log.Fatal(err)
+	        }
+	            defer f.Close()
+	        h := sha512.New()
+	        if _, err := io.Copy(h, f); err != nil {
+	            log.Fatal(err)
+	        }
+	        fmt.Printf("%x", h.Sum(nil))
+	        os.Exit(0)
         }
 
         if *generate == true {
-        GenerateRsaKey(*bit)
-        os.Exit(0)
+	        GenerateRsaKey(*bit)
+	        os.Exit(0)
         }
 
         if *sign == true && (*key == "" || *hash == "") {
