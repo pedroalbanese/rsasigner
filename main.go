@@ -223,5 +223,4 @@ func GenerateRsaKey(bit int) error {
 		return err
 	}
 	return nil
-
 }
