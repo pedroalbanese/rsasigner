@@ -3,7 +3,7 @@
 
 <h5>Usage:</h5>
 <pre> -bits int
-       Keypair bit length. (for keypair generation only) (default 2048)
+       Bit length. (for keypair generation only) (default 2048)
  -digest string
        Compute SHA256 hashsum of a file.
  -digest512 string
