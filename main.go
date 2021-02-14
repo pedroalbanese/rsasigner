@@ -16,7 +16,7 @@ import (
         b64 "encoding/base64"
 )
 
-        var bit = flag.Int("bits", 2048, "Keypair bit length. (for keypair generation only)")
+        var bit = flag.Int("bits", 2048, "Bit length. (for keypair generation only)")
         var digest = flag.String("digest", "", "Compute SHA256 hashsum of a file.")
         var digest512 = flag.String("digest512", "", "Compute SHA512 hashsum of a file.")
         var generate = flag.Bool("generate", false, "Generate RSA keypair.")
