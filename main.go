@@ -2,26 +2,32 @@ package main
 import (
 	"bufio"
 	"crypto"
+	"crypto/hmac"
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
 	"crypto/sha512"
 	"crypto/x509"
+	"encoding/hex"
 	"encoding/pem"
 	"flag"
 	"fmt"
+	"golang.org/x/crypto/pbkdf2"
 	"io"
 	"log"
 	"os"
         b64 "encoding/base64"
 )
 
-        var bit = flag.Int("bits", 2048, "Bit length. (for keypair generation only)")
+	var iter = flag.Int("iter", 1, "Iterations. (for HMAC only)")
+	var mac = flag.String("hmac", "", "Hash-based message authentication code.")
+	var salt = flag.String("salt", "", "Salt. (for HMAC only)")
+        var bit = flag.Int("bits", 2048, "Keypair bit length. (for keypair generation only)")
         var digest = flag.String("digest", "", "Compute SHA256 hashsum of a file.")
         var digest512 = flag.String("digest512", "", "Compute SHA512 hashsum of a file.")
         var generate = flag.Bool("generate", false, "Generate RSA keypair.")
         var hash = flag.String("hash", "", "Input hash/string to sign/verify. (- for stdin)")
-        var key = flag.String("key", "", "Path to Private/Public key depending on operation.")
+        var key = flag.String("key", "", "HMAC secret key.")
         var sig = flag.String("signature", "", "Input signature. (verification only)")
         var sign = flag.Bool("sign", false, "Sign hash with private key.")
         var suf = flag.String("suffix", ".pem", "Suffix. (for keypair generation only)")
@@ -31,14 +37,14 @@ func main() {
     flag.Parse()
 
         if (len(os.Args) < 2) {
-	fmt.Println("Select -sign, -verify, -generate or -digest.")
+	fmt.Println("Select -sign, -verify, -hmac, -generate or -digest.")
         flag.PrintDefaults()
         os.Exit(1)
         } 
 
-        if *sign == false && *verify == false && *generate == false && *digest == "" && *digest512 == "" {
+        if *sign == false && *verify == false && *generate == false && *mac == "" && *digest == "" && *digest512 == "" {
 	fmt.Println("Usage:")
-	fmt.Println("Select -sign, -verify, -generate or -digest. (type -h)")
+	fmt.Println("Select -sign, -verify, -hmac, -generate or -digest. (type -h)")
         os.Exit(1)
         } 
 
@@ -68,6 +74,27 @@ func main() {
 	        }
 	        fmt.Printf("%x", h.Sum(nil))
 	        os.Exit(0)
+        }
+
+        if *mac != "" {
+	var keyHex string
+	var prvRaw []byte
+	prvRaw = pbkdf2.Key([]byte(*key), []byte(*salt), *iter, 32, sha256.New)
+	keyHex = hex.EncodeToString(prvRaw)
+	key, err := hex.DecodeString(keyHex)
+	if err != nil {
+                log.Fatal(err)
+	}
+	        f, err := os.Open(*mac)
+	        if err != nil {
+	            log.Fatal(err)
+	        }
+	h := hmac.New(sha256.New, key)
+	if _, err = io.Copy(h, f); err != nil {
+                log.Fatal(err)
+	}
+	fmt.Println(hex.EncodeToString(h.Sum(nil)))
+        os.Exit(0)
         }
 
         if *generate == true {
@@ -223,4 +250,5 @@ func GenerateRsaKey(bit int) error {
 		return err
 	}
 	return nil
+
 }
