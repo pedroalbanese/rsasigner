@@ -3,7 +3,7 @@
 
 <h5>Usage:</h5>
 <pre> -bits int
-       Bit length. (for keypair generation only) (default 2048)
+       Keypair bit length. (for keypair generation only) (default 2048)
  -digest string
        Compute SHA256 hashsum of a file.
  -digest512 string
@@ -12,8 +12,14 @@
        Generate RSA keypair.
  -hash string
        Input hash/string to sign/verify. (- for stdin)
+ -hmac string
+       Hash-based message authentication code.
+ -iter int
+       Iterations. (for HMAC only) (default 1)
  -key string
-       Path to Private/Public key depending on operation.
+       HMAC secret key.
+ -salt string
+       Salt. (for HMAC only)
  -sign
        Sign hash with private key.
  -signature string
