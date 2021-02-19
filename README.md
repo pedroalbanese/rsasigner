@@ -45,7 +45,7 @@ sign=$(cat sign.txt)
 sign=$(cat sign.txt)
 ./rsasigner -verify -key public.pem -signature $sign -hash - < file.ext
 </pre>
-<h5>HMAC SHA256:</h5>
+<h5>SHA256-based HMAC with PBKDF2:</h5>
 <pre>./rsasigner -hmac &lt;file.ext&gt; -key &lt;secretkey&gt; [-iter 10000|-salt &lt;yoursalt&gt;]
 </pre>
 </pre>
