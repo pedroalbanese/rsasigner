@@ -13,9 +13,9 @@
  -hash string
        Input hash/string to sign/verify. (- for stdin)
  -hmac string
-       SHA256 Hash-based message authentication code.
+       Compute SHA256 HMAC of a file.
  -hmac512 string
-       SHA512 Hash-based message authentication code.
+       Compute SHA512 HMAC of a file.
  -iter int
        Iterations. (for HMAC only) (default 1)
  -key string
