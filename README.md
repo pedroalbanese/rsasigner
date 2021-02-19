@@ -13,7 +13,9 @@
  -hash string
        Input hash/string to sign/verify. (- for stdin)
  -hmac string
-       Hash-based message authentication code.
+       SHA-256 Hash-based message authentication code.
+ -hmac512 string
+       SHA-512 Hash-based message authentication code.
  -iter int
        Iterations. (for HMAC only) (default 1)
  -key string
