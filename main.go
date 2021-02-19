@@ -20,8 +20,8 @@ import (
 )
 
 	var iter = flag.Int("iter", 1, "Iterations. (for HMAC only)")
-	var mac = flag.String("hmac", "", "SHA-256 Hash-based message authentication code.")
-	var mac512 = flag.String("hmac512", "", "SHA-512 Hash-based message authentication code.")
+	var mac = flag.String("hmac", "", "Compute SHA256 HMAC of a file.")
+	var mac512 = flag.String("hmac512", "", "Compute SHA512 HMAC of a file.")
 	var salt = flag.String("salt", "", "Salt. (for HMAC only)")
         var bit = flag.Int("bits", 2048, "Keypair bit length. (for keypair generation only)")
         var digest = flag.String("digest", "", "Compute SHA256 hashsum of a file.")
@@ -38,12 +38,15 @@ func main() {
     flag.Parse()
 
         if (len(os.Args) < 2) {
-	fmt.Println("Select -sign, -verify, -hmac, -generate or -digest.")
+	fmt.Println("RSA Signer v1.0.1 - ALBANESE Lab (c) 2020-2021\n")
+	fmt.Println("Select -sign, -verify, -hmac, -generate or -digest.\n")
+	fmt.Println("Usage of",os.Args[0]+":")
         flag.PrintDefaults()
         os.Exit(1)
         } 
 
         if *sign == false && *verify == false && *generate == false && *mac == "" && *mac512 == "" && *digest == "" && *digest512 == "" {
+	fmt.Println("RSA Signer v1.0.1 - ALBANESE Lab (c) 2020-2021\n")
 	fmt.Println("Usage:")
 	fmt.Println("Select -sign, -verify, -hmac, -generate or -digest. (type -h)")
         os.Exit(1)
