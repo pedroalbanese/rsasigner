@@ -20,7 +20,8 @@ import (
 )
 
 	var iter = flag.Int("iter", 1, "Iterations. (for HMAC only)")
-	var mac = flag.String("hmac", "", "Hash-based message authentication code.")
+	var mac = flag.String("hmac", "", "SHA-256 Hash-based message authentication code.")
+	var mac512 = flag.String("hmac512", "", "SHA-512 Hash-based message authentication code.")
 	var salt = flag.String("salt", "", "Salt. (for HMAC only)")
         var bit = flag.Int("bits", 2048, "Keypair bit length. (for keypair generation only)")
         var digest = flag.String("digest", "", "Compute SHA256 hashsum of a file.")
@@ -42,7 +43,7 @@ func main() {
         os.Exit(1)
         } 
 
-        if *sign == false && *verify == false && *generate == false && *mac == "" && *digest == "" && *digest512 == "" {
+        if *sign == false && *verify == false && *generate == false && *mac == "" && *mac512 == "" && *digest == "" && *digest512 == "" {
 	fmt.Println("Usage:")
 	fmt.Println("Select -sign, -verify, -hmac, -generate or -digest. (type -h)")
         os.Exit(1)
@@ -85,11 +86,32 @@ func main() {
 	if err != nil {
                 log.Fatal(err)
 	}
-	f, err := os.Open(*mac)
+	        f, err := os.Open(*mac)
+	        if err != nil {
+	            log.Fatal(err)
+	        }
+	h := hmac.New(sha256.New, key)
+	if _, err = io.Copy(h, f); err != nil {
+                log.Fatal(err)
+	}
+	fmt.Println(hex.EncodeToString(h.Sum(nil)))
+        os.Exit(0)
+        }
+
+        if *mac512 != "" {
+	var keyHex string
+	var prvRaw []byte
+	prvRaw = pbkdf2.Key([]byte(*key), []byte(*salt), *iter, 64, sha512.New)
+	keyHex = hex.EncodeToString(prvRaw)
+	key, err := hex.DecodeString(keyHex)
+	if err != nil {
+                log.Fatal(err)
+	}
+	f, err := os.Open(*mac512)
 	if err != nil {
 	        log.Fatal(err)
 	}
-	h := hmac.New(sha256.New, key)
+	h := hmac.New(sha512.New, key)
 	if _, err = io.Copy(h, f); err != nil {
                 log.Fatal(err)
 	}
