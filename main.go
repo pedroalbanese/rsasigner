@@ -85,10 +85,10 @@ func main() {
 	if err != nil {
                 log.Fatal(err)
 	}
-	        f, err := os.Open(*mac)
-	        if err != nil {
-	            log.Fatal(err)
-	        }
+	f, err := os.Open(*mac)
+	if err != nil {
+	        log.Fatal(err)
+	}
 	h := hmac.New(sha256.New, key)
 	if _, err = io.Copy(h, f); err != nil {
                 log.Fatal(err)
