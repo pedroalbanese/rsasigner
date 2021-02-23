@@ -1,4 +1,4 @@
-# RSA Signer
+# RSA Signer (Prototype)
 <h3>Command-line RSA Hash Signer written in Go</h3>
 
 <h5>Usage:</h5>
